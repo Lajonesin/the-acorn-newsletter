@@ -20,13 +20,14 @@
   --text-muted:  #7a8a7a;
   --border:      #ddd5b8;
 
-  /* Category colors — matches August 2026 Financial Summary graphic */
-  --c1: #1E3A5F; /* Utilities             - navy */
-  --c2: #4A72A8; /* Contract Services     - blue */
-  --c3: #C97B3D; /* Payroll               - gold/orange */
-  --c4: #8FAE86; /* Maintenance & Repairs - sage green */
-  --c5: #E8C468; /* Administrative        - yellow */
-  --c6: #A8A8A8; /* Insurance & Taxes     - gray */
+  /* Category colors */
+  --c1: #c0453a; /* Utilities   - terracotta */
+  --c2: #3a6b45; /* Reserves    - deep green */
+  --c3: #c06878; /* Insurance   - rose */
+  --c4: #5a6aa0; /* Admin       - slate blue */
+  --c5: #c0983a; /* Contracts   - gold */
+  --c6: #7a7060; /* Repairs     - taupe */
+  --c7: #2a2820; /* Taxes       - near black */
 }
 
 body {
@@ -330,13 +331,13 @@ body {
     <div class="logo">🌰</div>
     <div class="page-header-text">
       <h1>Dues Calculator</h1>
-      <p>The Oaks of Woodlake — August 2026 Actuals</p>
+      <p>The Oaks of Woodlake — October 2026</p>
     </div>
   </div>
 
   <!-- INTRO -->
   <div class="intro">
-    <p style="margin-top:20px;">Your monthly dues fund everything that keeps The Oaks running — from utilities and payroll to maintenance and contracted services across all <strong>556 homes</strong>. Based on <strong>August 2026 actual operating expenses of $227,940.52</strong>, utilities make up nearly <strong>54%</strong> of what we spend each month, making conservation one of the most impactful things our community can do. <em>Enter your dues amount below to see a full breakdown of where every dollar goes.</em></p>
+    <p style="margin-top:20px;">Your monthly dues fund everything that keeps The Oaks running — from utilities and insurance to maintenance, reserves, and contracted services across all <strong>556 homes</strong>. Based on <strong>October 2026 expenses and reserve set-asides of $277,909</strong>, utilities make up about <strong>40%</strong> of where our money goes each month, making conservation one of the most impactful things our community can do. <em>Enter your dues amount below to see a full breakdown of where every dollar goes.</em></p>
   </div>
 
   <!-- INPUT CARD -->
@@ -365,15 +366,15 @@ body {
     </div>
     <div class="top-box">
       <div class="top-box-label">Contract Services</div>
-      <div class="top-box-amount" style="color:var(--c2);" id="box2">$183</div>
+      <div class="top-box-amount" style="color:var(--c5);" id="box2">$183</div>
     </div>
     <div class="top-box">
-      <div class="top-box-label">Payroll</div>
-      <div class="top-box-amount" style="color:var(--c3);" id="box3">$92</div>
+      <div class="top-box-label">Admin &amp; Management</div>
+      <div class="top-box-amount" style="color:var(--c4);" id="box3">$92</div>
     </div>
     <div class="top-box">
-      <div class="top-box-label">Maintenance &amp; Repairs</div>
-      <div class="top-box-amount" style="color:var(--c4);" id="box4">$52</div>
+      <div class="top-box-label">Repairs &amp; Maintenance</div>
+      <div class="top-box-amount" style="color:var(--c6);" id="box4">$52</div>
     </div>
   </div>
 
@@ -389,18 +390,19 @@ body {
       </div>
       <div class="chart-legend">
         <div class="legend-item"><div class="legend-dot" style="background:var(--c1);"></div>Utilities</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--c2);"></div>Contracts</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--c3);"></div>Payroll</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--c4);"></div>Maintenance</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--c5);"></div>Admin</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--c6);"></div>Insurance &amp; Taxes</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--c2);"></div>Reserves</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--c3);"></div>Insurance &amp; taxes</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--c4);"></div>Admin</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--c5);"></div>Contracts</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--c6);"></div>Repairs</div>
       </div>
     </div>
 
     <div class="breakdown-card">
       <div class="breakdown-title">Monthly Breakdown</div>
       <div id="breakdownRows"></div>
-      <div class="breakdown-note">Based on August 2026 actual operating expenses of $227,940.52 across 556 homes.</div>
+      <div class="breakdown-note">Based on October 2026 actual expenses of $211,243 plus $66,666 set aside for reserves ($58,333 for insurance and $8,333 for capital repairs), across 556 homes. Figures are preliminary and may not be final.</div>
+      <div class="breakdown-note">Utilities are the association's shared costs, such as common-area electricity and water for the whole property. They do not include the electric bill for your own unit. Percentages show how spending is divided and are not a change in dues.</div>
     </div>
 
   </div>
@@ -413,21 +415,18 @@ body {
 </div>
 
 <script>
-// August 2026 actual operating expense categories
-// Total operating expenses: $227,940.52 (matches August 2026 Financial Summary)
+// October 2026 actual expenses (cash basis, preliminary) plus the monthly reserve set-asides, from the October 2026 statements
+// Expenses $211,242.67 + monthly reserve set-asides $66,666.00 ($58,333 insurance reserve, $8,333 capital reserve) = $277,908.67
 var CATS = [
-  { name: 'Utilities (water, sewer, electricity)',        short: 'Utilities',   pct: 0.5388, color: '#1E3A5F' },
-  { name: 'Contract services (security, landscaping, trash)', short: 'Contracts', pct: 0.1890, color: '#4A72A8' },
-  { name: 'Payroll',                                       short: 'Payroll',     pct: 0.1152, color: '#C97B3D' },
-  { name: 'Maintenance & repairs',                         short: 'Maintenance', pct: 0.0896, color: '#8FAE86' },
-  { name: 'Administrative expenses',                       short: 'Admin',       pct: 0.0519, color: '#E8C468' },
-  { name: 'Insurance & taxes',                             short: 'Insurance & Taxes', pct: 0.0154, color: '#A8A8A8' },
+  { name: 'Utilities (water, sewer, electricity, gas)',   short: 'Utilities', amt: 110668.90, color: '#c0453a' },
+  { name: 'Contract services (security, landscaping, trash)', short: 'Contracts', amt: 50051.26, color: '#c0983a' },
+  { name: 'General & administrative (staff, management)', short: 'Admin', amt: 31770.45, color: '#5a6aa0' },
+  { name: 'Repairs & maintenance',                        short: 'Repairs', amt: 16177.96, color: '#7a7060' },
+  { name: 'Reserves: savings for future major repairs',   short: 'Reserves', amt: 8333.00, color: '#3a6b45' },
+  { name: 'Insurance & taxes (incl. monthly insurance set-aside)', short: 'Insurance & taxes', amt: 60907.10, color: '#c06878' }
 ];
-
-// Verify totals
-var totalPct = CATS.reduce(function(s, c) { return s + c.pct; }, 0);
-// Normalize to exactly 1
-CATS.forEach(function(c) { c.pct = c.pct / totalPct; });
+var TOTAL = CATS.reduce(function(s, c) { return s + c.amt; }, 0);
+CATS.forEach(function(c) { c.pct = c.amt / TOTAL; });
 
 var canvas = document.getElementById('donutCanvas');
 var ctx = canvas.getContext('2d');
